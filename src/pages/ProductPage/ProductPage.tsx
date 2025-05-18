@@ -79,9 +79,12 @@ export default function ProductPage() {
     );
   };
 
+  const testId = `product-${product.name.toLowerCase().replace(/\s+/g, "-")}`;
+  console.log(testId);
+
   return (
     <section className={classes["product-page"]}>
-      <div className={classes["product-page__wrapper"]}>
+      <div className={classes["product-page__wrapper"]} data-testid={testId}>
         <div className={classes["product-page__thumbnails"]}>
           {gallery.map((imgUrl: string, index: number) => (
             <img
