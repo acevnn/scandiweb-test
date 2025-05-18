@@ -59,7 +59,6 @@ export default function ProductPage() {
     prices = [],
     attributes = [],
   } = product;
-
   const price = prices[0];
   const allAttributesSelected =
     attributes.length === Object.keys(selectedAttributes).length;
@@ -77,7 +76,6 @@ export default function ProductPage() {
   };
 
   const testId = `product-${product.name.toLowerCase().replace(/\s+/g, "-")}`;
-  console.log(testId);
 
   return (
     <section className={classes["product-page"]}>
@@ -124,52 +122,58 @@ export default function ProductPage() {
           <p className={classes["product-page__brand"]}>{brand}</p>
 
           {product.inStock &&
-            attributes.map((attr) => (
-              <div
-                key={attr.id}
-                data-testid={`product-attribute-${attr.name
-                  .toLowerCase()
-                  .replace(/\s+/g, "-")}`}
-              >
-                <h3 className={classes["product-page__attribute-name"]}>
-                  {attr.name}:
-                </h3>
-                <ul>
-                  {attr.items.map((item) => {
-                    const isSelected =
-                      selectedAttributes[attr.name]?.id === item.id;
-                    return (
-                      <li
-                        key={item.id}
-                        onClick={() =>
-                          setSelectedAttributes((prev) => ({
-                            ...prev,
-                            [attr.name]: {
-                              id: item.id,
-                              displayValue: item.displayValue,
-                              value: item.value,
-                              attrType: attr.attrType,
-                            },
-                          }))
-                        }
-                        className={`${classes["product-page__attribute-item"]} ${
-                          isSelected
-                            ? classes["product-page__attribute-selected"]
-                            : ""
-                        }`}
-                        style={
-                          attr.attrType === "swatch"
-                            ? { backgroundColor: item.value }
-                            : {}
-                        }
-                      >
-                        {attr.attrType !== "swatch" && item.value}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ))}
+            attributes.map((attr) => {
+              const attrNameKebab = attr.name
+                .toLowerCase()
+                .replace(/\s+/g, "-");
+              return (
+                <div
+                  key={attr.id}
+                  data-testid={`product-attribute-${attrNameKebab}`}
+                >
+                  <h3 className={classes["product-page__attribute-name"]}>
+                    {attr.name}:
+                  </h3>
+                  <ul>
+                    {attr.items.map((item) => {
+                      const isSelected =
+                        selectedAttributes[attr.name]?.id === item.id;
+                      return (
+                        <li
+                          key={item.id}
+                          onClick={() =>
+                            setSelectedAttributes((prev) => ({
+                              ...prev,
+                              [attr.name]: {
+                                id: item.id,
+                                displayValue: item.displayValue,
+                                value: item.value,
+                                attrType: attr.attrType,
+                              },
+                            }))
+                          }
+                          className={`${classes["product-page__attribute-item"]} ${
+                            isSelected
+                              ? classes["product-page__attribute-selected"]
+                              : ""
+                          }`}
+                          style={
+                            attr.attrType === "swatch"
+                              ? { backgroundColor: item.value }
+                              : {}
+                          }
+                          data-testid={`product-attribute-${attrNameKebab}-${item.value}${
+                            isSelected ? "-selected" : ""
+                          }`}
+                        >
+                          {attr.attrType !== "swatch" && item.value}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
 
           <div className={classes["product-page__price"]}>
             <p>Price:</p>

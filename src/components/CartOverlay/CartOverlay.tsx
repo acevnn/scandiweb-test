@@ -35,7 +35,6 @@ export default function CartOverlay() {
                   const attrNameKebab = attr.name
                     .toLowerCase()
                     .replace(/\s+/g, "-");
-
                   const selectedAttr = item.selectedAttributes[attr.name];
                   if (!selectedAttr) return null;
 
@@ -51,24 +50,27 @@ export default function CartOverlay() {
                       >
                         {attr.items.map((opt) => {
                           const isSelected = selectedAttr.id === opt.id;
-                          const isColor = /^#([0-9A-F]{3}){1,2}$/i.test(
-                            opt.value,
-                          );
+                          const isColor = /^#/.test(opt.value);
+                          const baseTestId = `cart-item-attribute-${attrNameKebab}-${opt.value}`;
+                          const testId = isSelected
+                            ? `${baseTestId}-selected`
+                            : baseTestId;
 
                           return (
                             <li
                               key={opt.id}
-                              className={`${
-                                isColor
-                                  ? classes["cart-overlay__color-box"]
-                                  : classes["cart-overlay__value-box"]
-                              } ${isSelected ? classes["cart-overlay__selected"] : ""}`}
+                              data-testid={testId}
+                              className={`
+                                ${
+                                  isColor
+                                    ? classes["cart-overlay__color-box"]
+                                    : classes["cart-overlay__value-box"]
+                                }
+                                ${isSelected ? classes["cart-overlay__selected"] : ""}
+                              `}
                               style={
                                 isColor ? { backgroundColor: opt.value } : {}
                               }
-                              data-testid={`cart-item-attribute-${attrNameKebab}-${opt.value}${
-                                isSelected ? "-selected" : ""
-                              }`}
                             >
                               {!isColor && opt.displayValue}
                             </li>
@@ -87,7 +89,7 @@ export default function CartOverlay() {
                       item.id,
                       Object.fromEntries(
                         Object.entries(item.selectedAttributes).map(
-                          ([key, value]) => [key, value.id],
+                          ([k, v]) => [k, v.id],
                         ),
                       ),
                     )
@@ -103,7 +105,7 @@ export default function CartOverlay() {
                       item.id,
                       Object.fromEntries(
                         Object.entries(item.selectedAttributes).map(
-                          ([key, value]) => [key, value.id],
+                          ([k, v]) => [k, v.id],
                         ),
                       ),
                     )
