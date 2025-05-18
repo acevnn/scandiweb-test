@@ -6,12 +6,12 @@ import classes from "./ProductPage.module.scss";
 import { useCartStore } from "@/store/cartStore";
 import parse from "html-react-parser";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import { AttributeValue } from "@/types/dataTypes";
+import { AttributeValue, Product } from "@/types/dataTypes";
 
 export default function ProductPage() {
   const { id } = useParams();
   const location = useLocation();
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<Product | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const addItem = useCartStore((state) => state.addItem);
@@ -64,7 +64,7 @@ export default function ProductPage() {
     description,
     prices = [],
     attributes = [],
-  } = product || {};
+  } = product as Product;
 
   const price = prices[0];
   const allAttributesSelected =
@@ -127,7 +127,7 @@ export default function ProductPage() {
           <p className={classes["product-page__brand"]}>{brand}</p>
 
           {product.inStock &&
-            attributes.map((attr: any) => (
+            attributes.map((attr) => (
               <div
                 key={attr.id}
                 data-testid={`product-attribute-${attr.name.toLowerCase().replace(/\s+/g, "-")}`}
@@ -136,7 +136,7 @@ export default function ProductPage() {
                   {attr.name}:
                 </h3>
                 <ul>
-                  {attr.items.map((item: any) => {
+                  {attr.items.map((item) => {
                     const isSelected =
                       selectedAttributes[attr.name]?.id === item.id;
                     return (

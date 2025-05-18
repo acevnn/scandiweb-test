@@ -2,11 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useDrawer } from "./Drawer.hooks";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
-
-interface Category {
-  id: number;
-  name: string;
-}
+import { Category } from "@/types/dataTypes";
 
 export interface DrawerProps {
   isOpen: boolean;

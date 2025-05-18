@@ -24,7 +24,7 @@ export default function CategoryPage() {
         const products =
           categoryName?.toLowerCase() === "all"
             ? await getAllProducts()
-            : await getProductsByCategory(categoryName);
+            : await getProductsByCategory(categoryName!);
         setProducts(products);
       } catch (err) {
         console.error(err);

@@ -10,9 +10,10 @@ import { Drawer } from "@/components/Drawer/Drawer";
 import classes from "./Header.module.scss";
 import { useCartStore } from "@/store/cartStore";
 import CartOverlay from "@/components/CartOverlay/CartOverlay";
+import { Category } from "@/types/dataTypes";
 
 export default function Header() {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [isDrawer, setIsDrawer] = useState(false);
   const location = useLocation();
   const { isMobile, isDesktop } = useBreakpoints();

@@ -9,7 +9,11 @@ export async function fetchGraphQL(query: string, variables = {}) {
   });
 
   const { data, errors } = await response.json();
-  if (errors) throw new Error(errors.map((e) => e.message).join(", "));
+  if (errors) {
+    throw new Error(
+      errors.map((error: { message: string }) => error.message).join(", "),
+    );
+  }
   return data;
 }
 
