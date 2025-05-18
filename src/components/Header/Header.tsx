@@ -63,11 +63,7 @@ export default function Header() {
                 }`}
               >
                 <Link
-                  to={
-                    category.name.toLowerCase() === "all"
-                      ? "/all"
-                      : `${category.name}`
-                  }
+                  to={`/${category.name.toLowerCase()}`}
                   onClick={() =>
                     sessionStorage.setItem(
                       "activeCategory",
