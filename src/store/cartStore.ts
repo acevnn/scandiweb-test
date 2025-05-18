@@ -38,6 +38,8 @@ interface CartState {
   clearCart: () => void;
   totalCount: () => number;
   totalPrice: () => number;
+  isOverlayOpen: boolean;
+  setOverlayOpen: (open: boolean) => void;
 }
 
 function normalizeAttrs(attrs: Record<string, any>): Record<string, string> {
@@ -125,4 +127,7 @@ export const useCartStore = create<CartState>((set, get) => ({
       0,
     );
   },
+
+  isOverlayOpen: false,
+  setOverlayOpen: (open) => set({ isOverlayOpen: open }),
 }));

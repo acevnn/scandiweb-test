@@ -17,15 +17,12 @@ export default function ProductPage() {
   const [selectedAttributes, setSelectedAttributes] = useState<
     Record<string, AttributeValue>
   >({});
+  const setOverlayOpen = useCartStore((state) => state.setOverlayOpen);
 
   useEffect(() => {
-    if (location.state?.fromCategory) {
-      sessionStorage.setItem(
-        "activeCategory",
-        location.state.fromCategory.toLowerCase(),
-      );
-    } else if (product?.category) {
-      sessionStorage.setItem("activeCategory", product.category.toLowerCase());
+    const category = location.state?.fromCategory || product?.category;
+    if (category) {
+      sessionStorage.setItem("activeCategory", category.toLowerCase());
     }
   }, [location.state, product]);
 
@@ -83,8 +80,8 @@ export default function ProductPage() {
   console.log(testId);
 
   return (
-    <section className={classes["product-page"]}>
-      <div className={classes["product-page__wrapper"]} data-testid={testId}>
+    <section className={classes["product-page"]} data-testid={testId}>
+      <div className={classes["product-page__wrapper"]}>
         <div className={classes["product-page__thumbnails"]}>
           {gallery.map((imgUrl: string, index: number) => (
             <img
@@ -122,7 +119,7 @@ export default function ProductPage() {
           />
         </div>
 
-        <div className={classes["product-page__info"]} data-testid={testId}>
+        <div className={classes["product-page__info"]}>
           <h2>{name}</h2>
           <p className={classes["product-page__brand"]}>{brand}</p>
 
@@ -194,6 +191,7 @@ export default function ProductPage() {
                 selectedAttributes,
                 quantity: 1,
               });
+              setOverlayOpen(true);
             }}
           >
             {product.inStock ? "Add to Cart" : "Out of Stock"}

@@ -23,7 +23,8 @@ export default function Header() {
   const [isDrawer, setIsDrawer] = useState(false);
   const { isMobile, isDesktop } = useBreakpoints();
   const totalItems = useCartStore((state) => state.totalCount());
-  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const isOverlayOpen = useCartStore((state) => state.isOverlayOpen);
+  const setOverlayOpen = useCartStore((state) => state.setOverlayOpen);
   const location = useLocation();
   const pathname = location.pathname.toLowerCase();
 
@@ -60,7 +61,7 @@ export default function Header() {
   const toggleDrawer = () => setIsDrawer((prev) => !prev);
 
   function toggleCart() {
-    setIsOverlayOpen((prev) => !prev);
+    setOverlayOpen(!isOverlayOpen);
   }
 
   return (
