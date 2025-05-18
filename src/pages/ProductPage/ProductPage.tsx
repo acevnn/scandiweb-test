@@ -122,7 +122,7 @@ export default function ProductPage() {
           />
         </div>
 
-        <div className={classes["product-page__info"]}>
+        <div className={classes["product-page__info"]} data-testid={testId}>
           <h2>{name}</h2>
           <p className={classes["product-page__brand"]}>{brand}</p>
 
