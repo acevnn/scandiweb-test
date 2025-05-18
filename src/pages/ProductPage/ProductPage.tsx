@@ -19,10 +19,15 @@ export default function ProductPage() {
   >({});
 
   useEffect(() => {
-    if (product?.category) {
+    if (location.state?.fromCategory) {
+      sessionStorage.setItem(
+        "activeCategory",
+        location.state.fromCategory.toLowerCase(),
+      );
+    } else if (product?.category) {
       sessionStorage.setItem("activeCategory", product.category.toLowerCase());
     }
-  }, [product]);
+  }, [location.state, product]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -56,7 +61,7 @@ export default function ProductPage() {
     description,
     prices = [],
     attributes = [],
-  } = product as Product;
+  } = product;
 
   const price = prices[0];
   const allAttributesSelected =
@@ -122,7 +127,9 @@ export default function ProductPage() {
             attributes.map((attr) => (
               <div
                 key={attr.id}
-                data-testid={`product-attribute-${attr.name.toLowerCase().replace(/\s+/g, "-")}`}
+                data-testid={`product-attribute-${attr.name
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`}
               >
                 <h3 className={classes["product-page__attribute-name"]}>
                   {attr.name}:

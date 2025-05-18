@@ -21,10 +21,29 @@ export default function Header() {
   ];
   const [categories, setCategories] = useState<Category[]>(fallbackCategories);
   const [isDrawer, setIsDrawer] = useState(false);
-  const location = useLocation();
   const { isMobile, isDesktop } = useBreakpoints();
   const totalItems = useCartStore((state) => state.totalCount());
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const location = useLocation();
+  const pathname = location.pathname.toLowerCase();
+
+  const [currentCategory, setCurrentCategory] = useState(() => {
+    const raw = pathname.startsWith("/product/")
+      ? sessionStorage.getItem("activeCategory")
+      : pathname.replace("/", "");
+    return raw || "all";
+  });
+
+  useEffect(() => {
+    if (pathname.startsWith("/product/")) {
+      const stored = sessionStorage.getItem("activeCategory");
+      if (stored && stored !== currentCategory) {
+        setCurrentCategory(stored);
+      }
+    } else {
+      setCurrentCategory(pathname.replace("/", "") || "all");
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -44,10 +63,6 @@ export default function Header() {
     setIsOverlayOpen((prev) => !prev);
   }
 
-  const pathname = location.pathname.toLowerCase();
-  const currentCategory = pathname.startsWith("/product/")
-    ? sessionStorage.getItem("activeCategory") || "all"
-    : pathname.replace("/", "") || "all";
   return (
     <header className={classes.header}>
       {isDesktop && (
@@ -63,7 +78,15 @@ export default function Header() {
                 }`}
               >
                 <Link
-                  to={`/${category.name.toLowerCase()}`}
+                  to={
+                    category.name.toLowerCase() === "all"
+                      ? "/all"
+                      : category.name.toLowerCase() === "clothes"
+                        ? "/clothes"
+                        : category.name.toLowerCase() === "shoes"
+                          ? "/shoes"
+                          : "/tech"
+                  }
                   onClick={() =>
                     sessionStorage.setItem(
                       "activeCategory",

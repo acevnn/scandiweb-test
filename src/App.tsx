@@ -7,7 +7,6 @@ import MainLayout from "@/layouts/MainLayout";
 import CategoryPage from "@/pages/CategoryPage/CategoryPage";
 import ProductPage from "@/pages/ProductPage/ProductPage";
 import "@/styles/_global.scss";
-// import { CartProvider } from "@/context/CartContext";
 
 const router = createBrowserRouter([
   {
@@ -15,8 +14,11 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { path: "/", element: <Navigate to="/all" replace /> },
-      { path: "/:categoryName", element: <CategoryPage /> },
-      { path: "product/:id", element: <ProductPage /> },
+      { path: "/all", element: <CategoryPage /> },
+      { path: "/clothes", element: <CategoryPage /> },
+      { path: "/shoes", element: <CategoryPage /> },
+      { path: "/tech", element: <CategoryPage /> },
+      { path: "/product/:id", element: <ProductPage /> },
     ],
   },
 ]);

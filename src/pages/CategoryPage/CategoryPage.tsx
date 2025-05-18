@@ -12,10 +12,11 @@ import CartIcon from "@/assets/CartIcon/CartIcon";
 export default function CategoryPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const { categoryName } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
   const addItem = useCartStore((state) => state.addItem);
+
+  const location = useLocation();
+  const categoryName = location.pathname.replace("/", "") || "all";
 
   useEffect(() => {
     const fetchProducts = async () => {
