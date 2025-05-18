@@ -1,0 +1,58 @@
+.header {
+  //padding-block: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  pointer-events: auto;
+
+  &__nav-list {
+    display: flex;
+  }
+
+  &__category-link {
+    @include font(400, 1rem, 1.2, 0);
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: #1D1F22;
+    padding: 1.5rem;
+
+    &--active {
+      @include font(600);
+      border-bottom: 2px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+  }
+
+  &__cart-backdrop {
+    position: fixed;
+    top: 69px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 100px);
+    background-color: var(--backdrop-color);
+    z-index: 5;
+  }
+
+  &__cart-count {
+    @include font(700, 14px, 1, 0, ("Roboto", sans-serif));
+    position: absolute;
+    right: -10px;
+    top: 1rem;
+    border-radius: 60px;
+    background: #000;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__hamburger-menu,
+  &__cart {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--primary-color);
+  }
+}

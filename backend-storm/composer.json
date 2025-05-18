@@ -1,0 +1,24 @@
+{
+  "name": "nino/backend-storm",
+  "description": "Scandiweb backend test project",
+  "type": "project",
+  "require": {
+    "php": "^8.4",
+    "ext-pdo": "*",
+    "webonyx/graphql-php": "^15.11"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "scripts": {
+    "start": "php -S localhost:8000 -t public"
+  },
+  "minimum-stability": "stable",
+  "license": "MIT"
+}

@@ -1,0 +1,7 @@
+@mixin font($weight: 600, $font-size: 1rem, $line-height: 1.2, $letter-spacing: 0, $font-family: ('Raleway', sans-serif)) {
+  font-weight: $weight;
+  font-size: $font-size;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
+  font-family: $font-family;
+}

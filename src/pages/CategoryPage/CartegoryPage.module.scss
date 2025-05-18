@@ -1,0 +1,125 @@
+.loader-wrapper {
+  font-weight: 700;
+  display: flex;
+  gap: 0.75rem;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loader {
+  width: 4rem;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(circle closest-side, #000 90%, #0000);
+  background: var(--_g) 0 50%,
+  var(--_g) 50% 50%,
+  var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 50%;
+  animation: l3 1s infinite linear;
+}
+
+@keyframes l3 {
+  20% {
+    background-position: 0 0, 50% 50%, 100% 50%
+  }
+  40% {
+    background-position: 0 100%, 50% 0, 100% 50%
+  }
+  60% {
+    background-position: 0 50%, 50% 100%, 100% 0
+  }
+  80% {
+    background-position: 0 50%, 50% 50%, 100% 100%
+  }
+}
+
+.category-page {
+  width: 100%;
+  padding-block: 2rem;
+
+  &__header {
+    @include font(400, 2.625rem, 1.6, 0);
+    margin-bottom: 6.625rem;
+    text-transform: capitalize;
+  }
+
+  &__product-card {
+    position: relative;
+    width: 100%;
+    max-width: 24rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 35px 0 rgba(168, 172, 176, 0.5);
+
+
+    &:hover .category-page__quick-shop {
+      display: flex;
+    }
+
+    &.out-of-stock .category-page__quick-shop {
+      display: none;
+    }
+
+  }
+
+  &__quick-shop {
+    position: absolute;
+    bottom: 4rem;
+    right: 2.5rem;
+    background-color: #5ece7b;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    color: white;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  &__product-info {
+    color: #1D1F22;
+
+    h3 {
+      @include font(300, 1.125rem, 1.6, 0);
+      text-transform: capitalize;
+    }
+
+    p {
+      font-weight: 700;
+    }
+  }
+
+  &__img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border: 1px solid rgba(168, 172, 176, 0.2);
+  }
+
+  &__oos-wrapper {
+    position: relative;
+
+  }
+
+  &__section-wrapper {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  &__disabled {
+    opacity: 0.5;
+    background: #fff;
+  }
+
+  &__out-of-stock {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
