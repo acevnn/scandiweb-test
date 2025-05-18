@@ -80,8 +80,8 @@ export default function ProductPage() {
   console.log(testId);
 
   return (
-    <section className={classes["product-page"]} data-testid={testId}>
-      <div className={classes["product-page__wrapper"]}>
+    <section className={classes["product-page"]}>
+      <div className={classes["product-page__wrapper"]} data-testid={testId}>
         <div className={classes["product-page__thumbnails"]}>
           {gallery.map((imgUrl: string, index: number) => (
             <img
