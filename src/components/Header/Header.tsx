@@ -95,7 +95,7 @@ export default function Header() {
       )}
       <button
         className={classes["header__cart"]}
-        data-testid="card-btn"
+        data-testid="cart-btn"
         onClick={toggleCart}
       >
         <ShoppingCartIcon />

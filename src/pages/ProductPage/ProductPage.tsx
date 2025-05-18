@@ -1,4 +1,3 @@
-// ✅ ProductPage.tsx
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { getProductById } from "@/graphql/queries";
