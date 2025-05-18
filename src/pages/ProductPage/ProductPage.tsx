@@ -16,7 +16,7 @@ export default function ProductPage() {
   const [loading, setLoading] = useState(true);
   const addItem = useCartStore((state) => state.addItem);
   const [selectedAttributes, setSelectedAttributes] = useState<
-    Record<string, AttribfuteValue>
+    Record<string, AttributeValue>
   >({});
 
   console.log(product?.gallery[0]);
