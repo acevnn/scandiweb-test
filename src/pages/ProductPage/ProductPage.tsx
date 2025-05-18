@@ -19,8 +19,6 @@ export default function ProductPage() {
     Record<string, AttributeValue>
   >({});
 
-  console.log(product?.gallery[0]);
-
   useEffect(() => {
     if (!product) return;
 

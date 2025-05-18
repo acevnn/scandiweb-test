@@ -1,4 +1,3 @@
-// Header.tsx
 import { Link, useLocation } from "react-router-dom";
 import { getCategories } from "@/graphql/queries";
 import { useEffect, useState } from "react";

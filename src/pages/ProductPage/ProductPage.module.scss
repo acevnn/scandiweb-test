@@ -133,7 +133,8 @@
     @include font(600, 16px, 1.2, 0);
     width: 100%;
     padding: 16px 32px;
-    background-color: #5ECE7B;
+    background-color: var(--primary-color);
+    color: #fff;
     text-transform: uppercase;
     margin-bottom: 2.5rem;
     cursor: pointer;
@@ -143,12 +144,4 @@
       cursor: not-allowed;
     }
   }
-
-
-}
-
-.selected {
-  border: 2px solid #5ECE7B;
-  background-color: #000;
-  color: #fff;
 }

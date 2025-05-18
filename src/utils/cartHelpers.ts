@@ -3,7 +3,6 @@ import { AttributeValue } from "@/types/dataTypes";
 export function getDefaultAttributes(product) {
   const selected: Record<string, AttributeValue> = {};
 
-  console.log(product.name);
   product.attributes.forEach((attr) => {
     const firstValidOption = attr.items.find((item) => {
       if (product.name.includes("Jacket")) {

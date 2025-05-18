@@ -1,4 +1,3 @@
-// components/PlaceOrderButton.tsx
 import { useCartStore } from "@/store/cartStore";
 import { createOrder } from "@/graphql/queries";
 import { useState } from "react";

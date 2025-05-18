@@ -26,7 +26,6 @@ export default function CategoryPage() {
             ? await getAllProducts()
             : await getProductsByCategory(categoryName);
         setProducts(products);
-        console.log(products);
       } catch (err) {
         console.error(err);
       } finally {
@@ -59,14 +58,12 @@ export default function CategoryPage() {
   );
   if (loading) return loader;
 
-  console.log(products);
   return (
     <section className={classes["category-page"]}>
       <h1 className={classes["category-page__header"]}>{categoryName}</h1>
       <div className={classes["category-page__section-wrapper"]}>
         {products.map((product) => {
           const testId = `product-${product.name.toLowerCase().replace(/\s+/g, "-")}`;
-          console.log("this is de", testId);
           const firstPrice = product.prices?.[0];
           const price = firstPrice
             ? `${firstPrice.currency.symbol}${firstPrice.amount.toFixed(2)}`
