@@ -39,9 +39,9 @@ export default function Header() {
   }
 
   const pathname = location.pathname.toLowerCase();
-  const currentCategory = pathname.startsWith("/category/")
-    ? pathname.split("/category/")[1]
-    : sessionStorage.getItem("activeCategory") || "all";
+  const currentCategory = pathname.startsWith("/product/")
+    ? sessionStorage.getItem("activeCategory") || "all"
+    : pathname.replace("/", "") || "all";
   return (
     <header className={classes.header}>
       {isDesktop && (
