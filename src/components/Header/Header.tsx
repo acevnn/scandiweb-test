@@ -14,10 +14,10 @@ import { Category } from "@/types/dataTypes";
 
 export default function Header() {
   const fallbackCategories: Category[] = [
-    { id: "1", name: "All" },
-    { id: "2", name: "Clothes" },
-    { id: "3", name: "Shoes" },
-    { id: "4", name: "Tech" },
+    { id: "1", name: "all" },
+    { id: "2", name: "clothes" },
+    { id: "3", name: "shoes" },
+    { id: "4", name: "tech" },
   ];
   const [categories, setCategories] = useState<Category[]>(fallbackCategories);
   const [isDrawer, setIsDrawer] = useState(false);
