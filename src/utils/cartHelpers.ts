@@ -1,9 +1,11 @@
-import { AttributeValue } from "@/types/dataTypes";
+import { AttributeSet, AttributeValue, Product } from "@/types/dataTypes";
 
-export function getDefaultAttributes(product) {
+export function getDefaultAttributes(
+  product: Product,
+): Record<string, AttributeValue> {
   const selected: Record<string, AttributeValue> = {};
 
-  product.attributes.forEach((attr) => {
+  product.attributes.forEach((attr: AttributeSet) => {
     const firstValidOption = attr.items.find((item) => {
       if (product.name.includes("Jacket")) {
         return ["S", "M", "L", "XL"].includes(item.value);
@@ -26,10 +28,10 @@ export function getDefaultAttributes(product) {
   return selected;
 }
 
-const getFilteredAttributes = (product) => {
+const getFilteredAttributes = (product: Product): AttributeSet[] => {
   if (!product.attributes || !product.category) return [];
 
-  return product.attributes.map((attr) => {
+  return product.attributes.map((attr: AttributeSet) => {
     let filteredItems = attr.items;
 
     if (product.category.toLowerCase() === "shoes") {
