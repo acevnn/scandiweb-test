@@ -19,17 +19,10 @@ export default function ProductPage() {
   >({});
 
   useEffect(() => {
-    if (!product) return;
-
-    const categoryFromNav = location.state?.fromCategory;
-    const fallbackCategory = product.category;
-
-    const category = categoryFromNav || fallbackCategory;
-
-    if (category) {
-      sessionStorage.setItem("activeCategory", category.toLowerCase());
+    if (product?.category) {
+      sessionStorage.setItem("activeCategory", product.category.toLowerCase());
     }
-  }, [product, location.state]);
+  }, [product]);
 
   useEffect(() => {
     const fetchProduct = async () => {

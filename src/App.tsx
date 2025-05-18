@@ -14,8 +14,8 @@ const router = createBrowserRouter([
     path: "/",
     element: <MainLayout />,
     children: [
-      { path: "/", element: <Navigate to="/category/all" replace /> },
-      { path: "category/:categoryName", element: <CategoryPage /> },
+      { path: "/", element: <Navigate to="/all" replace /> },
+      { path: "/:categoryName", element: <CategoryPage /> },
       { path: "product/:id", element: <ProductPage /> },
     ],
   },
