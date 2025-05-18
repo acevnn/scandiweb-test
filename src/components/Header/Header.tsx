@@ -13,7 +13,13 @@ import CartOverlay from "@/components/CartOverlay/CartOverlay";
 import { Category } from "@/types/dataTypes";
 
 export default function Header() {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const fallbackCategories: Category[] = [
+    { id: "1", name: "All" },
+    { id: "2", name: "Clothes" },
+    { id: "3", name: "Shoes" },
+    { id: "4", name: "Tech" },
+  ];
+  const [categories, setCategories] = useState<Category[]>(fallbackCategories);
   const [isDrawer, setIsDrawer] = useState(false);
   const location = useLocation();
   const { isMobile, isDesktop } = useBreakpoints();
