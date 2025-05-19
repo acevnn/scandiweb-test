@@ -47,15 +47,18 @@ export function Drawer({ isOpen, toggleDrawer, navLinks }: DrawerProps) {
       className={`${classes.drawer} ${isOpen ? classes.drawerIsOpen : ""} ${!isOpen ? classes.drawerShadow : ""}`}
     >
       <nav className={classes.drawerHeaderNav}>
-        {navLinks.map((cat) => (
-          <Link
-            key={cat.id}
-            to={`/category/${cat.name.toLowerCase()}`}
-            onClick={toggleDrawer}
-          >
-            {cat.name}
-          </Link>
-        ))}
+        {navLinks.map((cat) => {
+          console.log(cat);
+          return (
+            <Link
+              key={cat.id}
+              to={`/${cat.name.toLowerCase()}`}
+              onClick={toggleDrawer}
+            >
+              {cat.name}
+            </Link>
+          );
+        })}
       </nav>
       <XMarkIcon onClick={toggleDrawer} />
     </div>
