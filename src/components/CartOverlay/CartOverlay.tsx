@@ -9,7 +9,7 @@ export default function CartOverlay() {
   const totalPrice = useCartStore((state) => state.totalPrice);
 
   return (
-    <div className={classes["cart-overlay"]} data-testid="cart-overlay">
+    <div className={classes["cart-overlay"]}>
       <div className={classes["cart-overlay__heading-wrapper"]}>
         <h2 className={classes["cart-overlay__heading"]}>My Bag, </h2>
         <p className={classes["cart-overlay__number-items"]}>
