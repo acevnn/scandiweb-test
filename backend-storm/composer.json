@@ -3,7 +3,7 @@
   "description": "Scandiweb backend test project",
   "type": "project",
   "require": {
-    "php": "^8.4",
+    "php": ">=8.3.0",
     "ext-pdo": "*",
     "webonyx/graphql-php": "^15.11"
   },

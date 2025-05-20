@@ -21,7 +21,7 @@ class GraphQL
     public static function handle(): string
     {
         try {
-            $pdo = new Database()->getConnection();
+            $pdo = (new Database())->getConnection();
             $categoryService = new CategoryService($pdo);
             $attributeService = new AttributeService($pdo);
             $productService = new ProductService($pdo);
@@ -31,34 +31,48 @@ class GraphQL
 
             $queryType = new ObjectType([
                 'name' => 'Query',
-                'fields' => fn(): array => [
-                    'ping' => [
-                        'type' => Type::string(),
-                        'resolve' => fn() => 'pong',
-                    ],
-                    'categories' => [
-                        'type' => Type::listOf(CategoryType::getType()),
-                        'resolve' => fn() => $categoryService->getAll(),
-                    ],
-                    'product' => [
-                        'type' => $productType,
-                        'args' => [
-                            'id' => Type::nonNull(Type::string()),
+                'fields' => function () use ($categoryService, $productService, $productType) {
+                    return [
+                        'ping' => [
+                            'type' => Type::string(),
+                            'resolve' => function () {
+                                return 'pong';
+                            },
                         ],
-                        'resolve' => fn($root, $args) => $productService->getById($args['id']),
-                    ],
-                    'productsByCategory' => [
-                        'type' => Type::listOf($productType),
-                        'args' => [
-                            'name' => ['type' => Type::nonNull(Type::string())],
+                        'categories' => [
+                            'type' => Type::listOf(CategoryType::getType()),
+                            'resolve' => function () use ($categoryService) {
+                                return $categoryService->getAll();
+                            },
                         ],
-                        'resolve' => fn($root, $args) => $productService->getByCategory($args['name']),
-                    ],
-                    'products' => [
-                        'type' => Type::listOf($productType),
-                        'resolve' => fn() => $productService->getAll(),
-                    ],
-                ],
+                        'product' => [
+                            'type' => $productType,
+                            'args' => [
+                                'id' => Type::nonNull(Type::string()),
+                            ],
+                            'resolve' => function ($root, $args) use ($productService) {
+                                return $productService->getById($args['id']);
+                            },
+                        ],
+                        'productsByCategory' => [
+                            'type' => Type::listOf($productType),
+                            'args' => [
+                                'name' => [
+                                    'type' => Type::nonNull(Type::string()),
+                                ],
+                            ],
+                            'resolve' => function ($root, $args) use ($productService) {
+                                return $productService->getByCategory($args['name']);
+                            },
+                        ],
+                        'products' => [
+                            'type' => Type::listOf($productType),
+                            'resolve' => function () use ($productService) {
+                                return $productService->getAll();
+                            },
+                        ],
+                    ];
+                },
             ]);
 
             $mutationType = new ObjectType([
@@ -70,8 +84,9 @@ class GraphQL
                             'productId' => Type::nonNull(Type::string()),
                             'quantity' => Type::nonNull(Type::int()),
                         ],
-                        'resolve' => fn($root, $args) =>
-                        $orderService->createOrder($args['productId'], $args['quantity']),
+                        'resolve' => function ($root, $args) use ($orderService) {
+                            return $orderService->createOrder($args['productId'], $args['quantity']);
+                        },
                     ],
                 ],
             ]);
