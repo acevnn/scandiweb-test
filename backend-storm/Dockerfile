@@ -1,7 +1,5 @@
-# Use the official PHP image with Apache
 FROM php:8.2-apache
 
-# Enable mod_rewrite
 RUN a2enmod rewrite
 
 # Install Composer
@@ -9,20 +7,18 @@ RUN apt-get update && apt-get install -y unzip git curl \
  && curl -sS https://getcomposer.org/installer | php \
  && mv composer.phar /usr/local/bin/composer
 
-# Set working directory to project root
-WORKDIR /var/www
+WORKDIR /var/www/html
 
-# Copy all files into container
-COPY . .
+# Copy only composer files first
+COPY composer.json composer.lock ./
 
-# Run composer install in the project root
+# Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Set working directory for Apache to look for public files
-WORKDIR /var/www/public
+# Then copy the rest of the app
+COPY . .
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www
+# Set correct permissions
+RUN chown -R www-data:www-data /var/www/html
 
-# Expose port
 EXPOSE 80
