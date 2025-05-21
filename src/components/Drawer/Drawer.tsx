@@ -48,7 +48,6 @@ export function Drawer({ isOpen, toggleDrawer, navLinks }: DrawerProps) {
     >
       <nav className={classes.drawerHeaderNav}>
         {navLinks.map((cat) => {
-          console.log(cat);
           return (
             <Link
               key={cat.id}
