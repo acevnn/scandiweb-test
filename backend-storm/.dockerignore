@@ -1,7 +1,5 @@
+vendor/
 node_modules
-vendor
 .git
-.dockerignore
-Dockerfile
-README.md
 *.log
+README.md
