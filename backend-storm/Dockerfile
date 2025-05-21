@@ -2,7 +2,7 @@
 FROM php:8.2-apache
 
 # Copy project files to the container
-COPY . /var/www/html/
+COPY public/ /var/www/html/
 
 # Enable mod_rewrite (required for many frameworks)
 RUN a2enmod rewrite
