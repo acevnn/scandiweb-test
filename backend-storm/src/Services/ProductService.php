@@ -154,7 +154,7 @@ class ProductService
         }
     }
 
-    private const array CATEGORY_MAP = [
+    private const CATEGORY_MAP = [
         'clothes' => ClothesProduct::class,
         'tech' => TechProduct::class,
     ];
