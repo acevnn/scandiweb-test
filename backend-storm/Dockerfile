@@ -1,25 +1,25 @@
 # Use the official PHP image with Apache
 FROM php:8.2-apache
 
-# Enable mod_rewrite (required for many frameworks)
+# Enable mod_rewrite
 RUN a2enmod rewrite
 
-# Install dependencies (composer, unzip)
-RUN apt-get update && apt-get install -y unzip git && \
-    curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer
+# Install Composer
+RUN apt-get update && apt-get install -y unzip git curl \
+ && curl -sS https://getcomposer.org/installer | php \
+ && mv composer.phar /usr/local/bin/composer
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy everything to the container
+# Copy all files
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-interaction --no-dev --optimize-autoloader
+# Run composer install
+RUN composer install --no-dev --optimize-autoloader
 
-# Set proper permissions
+# Set permissions
 RUN chown -R www-data:www-data /var/www/html
 
-# Expose port 80
+# Expose port
 EXPOSE 80
