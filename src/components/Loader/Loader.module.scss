@@ -1,0 +1,39 @@
+.loader-wrapper {
+
+  display: flex;
+  gap: 0.75rem;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4rem;
+  color: #5ECE7B;
+
+  h2 {
+    @include font(700, 32px, 1.6, 0, ("Raleway", sans-serif));
+  }
+}
+
+.loader {
+  width: 2.5rem;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(circle closest-side, #5ECE7B 90%, #0000);
+  background: var(--_g) 0 50%,
+  var(--_g) 50% 50%,
+  var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 50%;
+  animation: l3 1s infinite linear;
+}
+
+@keyframes l3 {
+  20% {
+    background-position: 0 0, 50% 50%, 100% 50%
+  }
+  40% {
+    background-position: 0 100%, 50% 0, 100% 50%
+  }
+  60% {
+    background-position: 0 50%, 50% 100%, 100% 0
+  }
+  80% {
+    background-position: 0 50%, 50% 50%, 100% 100%
+  }
+}

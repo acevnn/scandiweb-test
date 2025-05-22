@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import getFilteredAttributes, {
   getDefaultAttributes,
@@ -8,6 +8,7 @@ import classes from "./CartegoryPage.module.scss";
 import { getAllProducts, getProductsByCategory } from "@/graphql/queries";
 import { useCartStore } from "@/store/cartStore";
 import CartIcon from "@/assets/CartIcon/CartIcon";
+import Loader from "@/components/Loader/Loader";
 
 export default function CategoryPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -51,13 +52,7 @@ export default function CategoryPage() {
     }
   }, [location.state, products]);
 
-  const loader = (
-    <div className={classes["loader-wrapper"]}>
-      <h2>Loading products..</h2>
-      <div className={classes.loader} />
-    </div>
-  );
-  if (loading) return loader;
+  if (loading) return <Loader />;
 
   return (
     <section className={classes["category-page"]}>

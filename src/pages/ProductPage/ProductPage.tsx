@@ -6,6 +6,7 @@ import { useCartStore } from "@/store/cartStore";
 import parse from "html-react-parser";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { AttributeValue, Product } from "@/types/dataTypes";
+import Loader from "@/components/Loader/Loader";
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -48,7 +49,7 @@ export default function ProductPage() {
     }
   }, [product]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
   if (!product) return <p>Product not found</p>;
 
   const {
@@ -187,9 +188,13 @@ export default function ProductPage() {
           <button
             data-testid="add-to-cart"
             disabled={!allAttributesSelected || !product.inStock}
-            className={classes["product-page__add-to-cart"]}
+            className={`${classes["product-page__add-to-cart"]} ${
+              !allAttributesSelected || !product.inStock
+                ? classes["disabled"]
+                : ""
+            }`}
             onClick={() => {
-              if (!product.inStock) return;
+              if (!product.inStock || !allAttributesSelected) return;
               addItem({
                 ...product,
                 selectedAttributes,
