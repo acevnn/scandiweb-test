@@ -4,6 +4,11 @@
   align-items: center;
   position: relative;
   pointer-events: auto;
+  padding-top: 1.5rem;
+
+  @include media-query('md') {
+    padding: 0;
+  }
 
   &__nav-list {
     display: flex;

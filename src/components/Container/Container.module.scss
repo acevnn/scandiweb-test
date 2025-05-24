@@ -2,6 +2,15 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding-inline: 6rem;
+  padding-inline: 1.5rem;
+  padding-bottom: 2rem;
   box-sizing: border-box;
+
+  @include media-query('md') {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding-inline: 6rem;
+    box-sizing: border-box;
+  }
 }
