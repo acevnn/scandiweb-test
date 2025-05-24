@@ -3,9 +3,14 @@
   padding-block: 2rem;
 
   &__header {
-    @include font(400, 2.625rem, 1.6, 0);
-    margin-bottom: 6.625rem;
+    @include font(400, 2rem, 1.6, 0);
+    margin-bottom: 3rem;
     text-transform: capitalize;
+
+    @include media-query('md') {
+      @include font(400, 2.625rem, 1.6, 0);
+      margin-bottom: 6.625rem;
+    }
   }
 
   &__product-card {
@@ -76,6 +81,7 @@
     display: flex;
     gap: 2.5rem;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   &__disabled {
