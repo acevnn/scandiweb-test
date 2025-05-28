@@ -1,4 +1,10 @@
 FROM php:8.2-apache
+# Declare environment variables so they're passed to PHP
+ENV DB_HOST=$DB_HOST
+ENV DB_NAME=$DB_NAME
+ENV DB_USER=$DB_USER
+ENV DB_PASS=$DB_PASS
+ENV DB_PORT=$DB_PORT
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
