@@ -44,11 +44,6 @@ export default function CategoryPage() {
         "activeCategory",
         location.state.fromCategory.toLowerCase(),
       );
-    } else if (products[0]?.category) {
-      sessionStorage.setItem(
-        "activeCategory",
-        products[0].category.toLowerCase(),
-      );
     }
   }, [location.state, products]);
 

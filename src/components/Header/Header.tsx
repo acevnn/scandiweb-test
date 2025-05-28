@@ -25,14 +25,16 @@ export default function Header() {
   const totalItems = useCartStore((state) => state.totalCount());
   const isOverlayOpen = useCartStore((state) => state.isOverlayOpen);
   const setOverlayOpen = useCartStore((state) => state.setOverlayOpen);
-  const location = useLocation();
-  const pathname = location.pathname.toLowerCase();
+  const pathname = useLocation().pathname.toLowerCase();
 
   const [currentCategory, setCurrentCategory] = useState(() => {
-    const raw = pathname.startsWith("/product/")
-      ? sessionStorage.getItem("activeCategory")
-      : pathname.replace("/", "");
-    return raw || "all";
+    if (pathname.startsWith("/product/")) {
+      const stored = sessionStorage.getItem("activeCategory");
+      return stored || "all";
+    }
+
+    const pathCategory = pathname.replace("/", "");
+    return pathCategory || "all";
   });
 
   useEffect(() => {
@@ -44,7 +46,17 @@ export default function Header() {
     } else {
       setCurrentCategory(pathname.replace("/", "") || "all");
     }
-  }, [pathname]);
+    const handleStorageChange = () => {
+      const stored = sessionStorage.getItem("activeCategory") || "all";
+      if (pathname.startsWith("/product/")) {
+        setCurrentCategory(stored);
+      }
+    };
+
+    window.addEventListener("categoryChange", handleStorageChange);
+    return () =>
+      window.removeEventListener("categoryChange", handleStorageChange);
+  }, [currentCategory, pathname]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -79,15 +91,7 @@ export default function Header() {
                 }`}
               >
                 <Link
-                  to={
-                    category.name.toLowerCase() === "all"
-                      ? "/all"
-                      : category.name.toLowerCase() === "clothes"
-                        ? "/clothes"
-                        : category.name.toLowerCase() === "shoes"
-                          ? "/shoes"
-                          : "/tech"
-                  }
+                  to={`/${category.name.toLowerCase()}`}
                   onClick={() =>
                     sessionStorage.setItem(
                       "activeCategory",

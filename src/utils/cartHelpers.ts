@@ -4,17 +4,15 @@ export function getDefaultAttributes(
   product: Product,
 ): Record<string, AttributeValue> {
   const selected: Record<string, AttributeValue> = {};
-
   product.attributes.forEach((attr: AttributeSet) => {
     const firstValidOption = attr.items.find((item) => {
-      if (product.name.includes("Jacket")) {
+      if (product.category.includes("clothes")) {
         return ["S", "M", "L", "XL"].includes(item.value);
-      } else if (product.name.includes("Nike")) {
+      } else if (product.category.includes("shoes")) {
         return ["40", "41", "42", "43"].includes(item.value);
       }
       return true;
     });
-
     if (firstValidOption) {
       selected[attr.name] = {
         id: firstValidOption.id,

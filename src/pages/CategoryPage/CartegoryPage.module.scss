@@ -82,6 +82,10 @@
     gap: 2.5rem;
     flex-wrap: wrap;
     justify-content: center;
+
+    @include media-query('md') {
+      justify-content: flex-start;
+    }
   }
 
   &__disabled {

@@ -24,6 +24,7 @@ export default function ProductPage() {
     const category = location.state?.fromCategory || product?.category;
     if (category) {
       sessionStorage.setItem("activeCategory", category.toLowerCase());
+      window.dispatchEvent(new Event("categoryChange"));
     }
   }, [location.state, product]);
 
@@ -32,6 +33,9 @@ export default function ProductPage() {
       try {
         setLoading(true);
         const product = await getProductById(id!);
+        if (!product.category && location.state?.fromCategory) {
+          product.category = location.state.fromCategory;
+        }
         setProduct(product);
       } catch (err) {
         console.error(err);
@@ -41,7 +45,7 @@ export default function ProductPage() {
     };
 
     if (id) fetchProduct();
-  }, [id]);
+  }, [id, location.state.fromCategory]);
 
   useEffect(() => {
     if (!product?.inStock) {
@@ -60,6 +64,7 @@ export default function ProductPage() {
     prices = [],
     attributes = [],
   } = product;
+
   const price = prices[0];
   const allAttributesSelected =
     attributes.length === Object.keys(selectedAttributes).length;
@@ -77,6 +82,7 @@ export default function ProductPage() {
   };
 
   const testId = `product-${product.name.toLowerCase().replace(/\s+/g, "-")}`;
+  const sizeOrder = ["S", "M", "L", "XL"];
 
   return (
     <section className={classes["product-page"]}>
@@ -136,41 +142,48 @@ export default function ProductPage() {
                     {attr.name}:
                   </h3>
                   <ul>
-                    {attr.items.map((item) => {
-                      const isSelected =
-                        selectedAttributes[attr.name]?.id === item.id;
-                      return (
-                        <li
-                          key={item.id}
-                          onClick={() =>
-                            setSelectedAttributes((prev) => ({
-                              ...prev,
-                              [attr.name]: {
-                                id: item.id,
-                                displayValue: item.displayValue,
-                                value: item.value,
-                                attrType: attr.attrType,
-                              },
-                            }))
-                          }
-                          className={`${classes["product-page__attribute-item"]} ${
-                            isSelected
-                              ? classes["product-page__attribute-selected"]
-                              : ""
-                          }`}
-                          style={
-                            attr.attrType === "swatch"
-                              ? { backgroundColor: item.value }
-                              : {}
-                          }
-                          data-testid={`product-attribute-${attrNameKebab}-${item.value}${
-                            isSelected ? "-selected" : ""
-                          }`}
-                        >
-                          {attr.attrType !== "swatch" && item.value}
-                        </li>
-                      );
-                    })}
+                    {[...attr.items]
+                      .sort(
+                        (a, b) =>
+                          sizeOrder.indexOf(a.value) -
+                          sizeOrder.indexOf(b.value),
+                      )
+                      .map((item) => {
+                        const isSelected =
+                          selectedAttributes[attr.name]?.id === item.id;
+
+                        return (
+                          <li
+                            key={item.id}
+                            onClick={() =>
+                              setSelectedAttributes((prev) => ({
+                                ...prev,
+                                [attr.name]: {
+                                  id: item.id,
+                                  displayValue: item.displayValue,
+                                  value: item.value,
+                                  attrType: attr.attrType,
+                                },
+                              }))
+                            }
+                            className={`${classes["product-page__attribute-item"]} ${
+                              isSelected
+                                ? classes["product-page__attribute-selected"]
+                                : ""
+                            }`}
+                            style={
+                              attr.attrType === "swatch"
+                                ? { backgroundColor: item.value }
+                                : {}
+                            }
+                            data-testid={`product-attribute-${attrNameKebab}-${item.value}${
+                              isSelected ? "-selected" : ""
+                            }`}
+                          >
+                            {attr.attrType !== "swatch" && item.value}
+                          </li>
+                        );
+                      })}
                   </ul>
                 </div>
               );
