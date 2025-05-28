@@ -2,10 +2,6 @@
   &__main {
     height: auto;
     position: relative;
-
-    //@include media-query('md') {
-    //  height: 541px;
-    //}
   }
 
   &__info {
@@ -202,6 +198,12 @@
       &:last-child {
         @include font(700, 24px, 18px, 0);
       }
+    }
+  }
+
+  &__description {
+    ul {
+      flex-wrap: wrap;
     }
   }
 

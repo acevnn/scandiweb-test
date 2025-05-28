@@ -39,8 +39,6 @@ class Database
         return $this->connection;
     }
 }
-
-
 // namespace App\Config;
 //
 // use PDO;
