@@ -43,7 +43,9 @@ interface CartState {
 }
 
 function normalizeAttrs(attrs: Record<string, any>): Record<string, string> {
-  return Object.fromEntries(Object.entries(attrs).map(([k, v]) => [k, v.id]));
+  return Object.fromEntries(
+    Object.entries(attrs).map(([key, value]) => [key, value.id]),
+  );
 }
 
 export const useCartStore = create<CartState>((set, get) => ({

@@ -89,7 +89,7 @@ export default function CartOverlay() {
                       item.id,
                       Object.fromEntries(
                         Object.entries(item.selectedAttributes).map(
-                          ([k, v]) => [k, v.id],
+                          ([key, value]) => [key, value.id],
                         ),
                       ),
                     )
@@ -105,7 +105,7 @@ export default function CartOverlay() {
                       item.id,
                       Object.fromEntries(
                         Object.entries(item.selectedAttributes).map(
-                          ([k, v]) => [k, v.id],
+                          ([key, value]) => [key, value.id],
                         ),
                       ),
                     )

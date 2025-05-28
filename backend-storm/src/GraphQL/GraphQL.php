@@ -21,7 +21,7 @@ class GraphQL
     public static function handle(): string
     {
         try {
-            $pdo = (new Database())->getConnection();
+            $pdo = new Database()->getConnection();
             $categoryService = new CategoryService($pdo);
             $attributeService = new AttributeService($pdo);
             $productService = new ProductService($pdo);
