@@ -32,9 +32,6 @@ class Database
             ]);
             exit;
         }
-        file_put_contents('php://stderr', "DB_HOST=" . getenv('DB_HOST') . PHP_EOL);
-        file_put_contents('php://stderr', "DB_USER=" . getenv('DB_USER') . PHP_EOL);
-        file_put_contents('php://stderr', "DB_PASS=" . getenv('DB_PASS') . PHP_EOL);
     }
 
     public function getConnection(): PDO
@@ -42,8 +39,8 @@ class Database
         return $this->connection;
     }
 }
-//
-//
+
+
 // namespace App\Config;
 //
 // use PDO;

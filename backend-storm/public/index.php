@@ -16,5 +16,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 use App\GraphQL\GraphQL;
 
 require_once __DIR__ . '/../vendor/autoload.php';
-file_put_contents('php://stderr', "✅ Starting GraphQL handler\n");
 echo GraphQL::handle();
