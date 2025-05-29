@@ -106,13 +106,17 @@ export default function ProductPage() {
           data-testid="product-gallery"
         >
           <button
-            className={classes["product-page__next"]}
+            className={
+              gallery.length > 1 ? `${classes["product-page__next"]}` : ""
+            }
             onClick={handleNextImage}
           >
             <ChevronRightIcon />
           </button>
           <button
-            className={classes["product-page__prev"]}
+            className={
+              gallery.length > 1 ? `${classes["product-page__prev"]}` : ""
+            }
             onClick={handlePrevImage}
           >
             <ChevronLeftIcon />
