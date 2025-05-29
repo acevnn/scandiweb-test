@@ -65,6 +65,7 @@ export default function ProductPage() {
     attributes = [],
   } = product;
 
+  console.log(gallery.length);
   const price = prices[0];
   const allAttributesSelected =
     attributes.length === Object.keys(selectedAttributes).length;
@@ -106,13 +107,17 @@ export default function ProductPage() {
           data-testid="product-gallery"
         >
           <button
-            className={classes["product-page__next"]}
+            className={
+              gallery.length > 1 ? `${classes["product-page__next"]}` : ""
+            }
             onClick={handleNextImage}
           >
             <ChevronRightIcon />
           </button>
           <button
-            className={classes["product-page__prev"]}
+            className={
+              gallery.length > 1 ? `${classes["product-page__prev"]}` : ""
+            }
             onClick={handlePrevImage}
           >
             <ChevronLeftIcon />
