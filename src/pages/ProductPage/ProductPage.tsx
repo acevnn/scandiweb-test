@@ -65,7 +65,6 @@ export default function ProductPage() {
     attributes = [],
   } = product;
 
-  console.log(gallery.length);
   const price = prices[0];
   const allAttributesSelected =
     attributes.length === Object.keys(selectedAttributes).length;
