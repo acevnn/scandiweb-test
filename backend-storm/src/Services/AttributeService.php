@@ -28,10 +28,17 @@ class AttributeService
             foreach ($attributes as &$attribute) {
                 $items = $this->getAttributeItems($attribute['id']);
 
-                if (in_array($productId, ['huarache-x-stussy-le'])) {
+                $sizeFilterMap = [
+                    'huarache-x-stussy-le' => 'numeric',
+                    'jacket-canada-goosee' => 'clothing',
+                ];
+
+                $filterType = $sizeFilterMap[$productId] ?? 'clothing';
+
+                if ($filterType === 'numeric') {
                     $items = array_filter($items, fn($item) => is_numeric($item['value']));
-                } else {
-                    $validSizes = ['S', 'M', 'L', 'XL'];
+                } elseif ($filterType === 'clothing') {
+                    $validSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
                     $items = array_filter($items, fn($item) => in_array(strtoupper($item['value']), $validSizes));
                 }
 
