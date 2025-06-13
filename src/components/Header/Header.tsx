@@ -16,8 +16,7 @@ export default function Header() {
   const fallbackCategories: Category[] = [
     { id: "1", name: "all" },
     { id: "2", name: "clothes" },
-    { id: "3", name: "shoes" },
-    { id: "4", name: "tech" },
+    { id: "3", name: "tech" },
   ];
   const [categories, setCategories] = useState<Category[]>(fallbackCategories);
   const [isDrawer, setIsDrawer] = useState(false);
