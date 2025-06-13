@@ -5,6 +5,7 @@
   position: relative;
   pointer-events: auto;
   padding-block: 1.5rem;
+  margin-bottom: 5rem;
 
   @include media-query('md') {
     padding: 0;
