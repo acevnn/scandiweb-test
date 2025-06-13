@@ -91,12 +91,13 @@ export default function Header() {
               >
                 <Link
                   to={`/${category.name.toLowerCase()}`}
-                  onClick={() =>
+                  onClick={() => {
                     sessionStorage.setItem(
                       "activeCategory",
                       category.name.toLowerCase(),
-                    )
-                  }
+                    );
+                    setOverlayOpen(false);
+                  }}
                   data-testid={
                     currentCategory === category.name
                       ? "active-category-link"
