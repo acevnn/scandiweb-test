@@ -1,8 +1,8 @@
-import { Product, Category } from "@/types/dataTypes";
-import { GRAPHQL_ENDPOINT } from "@/utils/constants";
+import { Category, Product } from "@/types/dataTypes";
+import { GRAPHQL_ENDPOINT_LOCAL } from "@/utils/constants";
 
 export async function fetchGraphQL(query: string, variables = {}) {
-  const response = await fetch(GRAPHQL_ENDPOINT, {
+  const response = await fetch(GRAPHQL_ENDPOINT_LOCAL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query, variables }),

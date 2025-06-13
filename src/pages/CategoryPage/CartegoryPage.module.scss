@@ -16,7 +16,7 @@
   &__product-card {
     position: relative;
     width: 100%;
-    max-width: 24rem;
+    max-width: 22rem;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -82,10 +82,6 @@
     gap: 2.5rem;
     flex-wrap: wrap;
     justify-content: center;
-
-    @include media-query('md') {
-      justify-content: flex-start;
-    }
   }
 
   &__disabled {
