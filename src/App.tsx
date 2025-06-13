@@ -16,7 +16,6 @@ const router = createBrowserRouter([
       { path: "/", element: <Navigate to="/all" replace /> },
       { path: "/all", element: <CategoryPage /> },
       { path: "/clothes", element: <CategoryPage /> },
-      { path: "/shoes", element: <CategoryPage /> },
       { path: "/tech", element: <CategoryPage /> },
       { path: "/product/:id", element: <ProductPage /> },
     ],

@@ -12,10 +12,6 @@
       {
         "name": "tech",
         "__typename": "Category"
-      },
-      {
-        "name": "shoes",
-        "__typename": "Category"
       }
     ],
     "products": [

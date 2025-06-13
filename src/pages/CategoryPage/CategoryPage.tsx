@@ -1,9 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import getFilteredAttributes, {
-  getDefaultAttributes,
-} from "@/utils/cartHelpers";
-import { Product } from "@/types/dataTypes";
+import { AttributeValue, Product } from "@/types/dataTypes";
 import classes from "./CartegoryPage.module.scss";
 import { getAllProducts, getProductsByCategory } from "@/graphql/queries";
 import { useCartStore } from "@/store/cartStore";
@@ -103,16 +100,22 @@ export default function CategoryPage() {
                   onClick={(e) => {
                     e.stopPropagation();
 
-                    const filteredAttributes = getFilteredAttributes(product);
-
-                    const defaultAttrs = getDefaultAttributes({
-                      ...product,
-                      attributes: filteredAttributes,
+                    const defaultAttrs: Record<string, AttributeValue> = {};
+                    product.attributes.forEach((attr) => {
+                      if (attr.items.length > 0) {
+                        const item = attr.items[0];
+                        defaultAttrs[attr.name] = {
+                          id: item.id,
+                          value: item.value,
+                          displayValue: item.displayValue,
+                          attrType: attr.attrType,
+                        };
+                      }
                     });
 
                     addItem({
                       ...product,
-                      attributes: filteredAttributes,
+                      attributes: product.attributes,
                       categoryId: product.categoryId,
                       selectedAttributes: defaultAttrs,
                       quantity: 1,
