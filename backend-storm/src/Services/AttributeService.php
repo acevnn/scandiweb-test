@@ -38,7 +38,7 @@ class AttributeService
                 if ($filterType === 'numeric') {
                     $items = array_filter($items, fn($item) => is_numeric($item['value']));
                 } elseif ($filterType === 'clothing') {
-                    $validSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+                    $validSizes = ['S', 'M', 'L', 'XL'];
                     $items = array_filter($items, fn($item) => in_array(strtoupper($item['value']), $validSizes));
                 }
 
