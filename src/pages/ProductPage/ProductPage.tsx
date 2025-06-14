@@ -84,22 +84,26 @@ export default function ProductPage() {
   const testId = `product-${product.name.toLowerCase().replace(/\s+/g, "-")}`;
   const sizeOrder = ["S", "M", "L", "XL"];
 
+  console.log(gallery.length);
+
   return (
     <section className={classes["product-page"]}>
       <div className={classes["product-page__wrapper"]} data-testid={testId}>
-        <div className={classes["product-page__thumbnails"]}>
-          {gallery.map((imgUrl: string, index: number) => (
-            <img
-              key={index}
-              src={imgUrl}
-              alt={`${name} - ${index}`}
-              width={50}
-              height={50}
-              onClick={() => setCurrentImageIndex(index)}
-              className={classes["product-page__thumbnail"]}
-            />
-          ))}
-        </div>
+        {gallery.length > 1 && (
+          <div className={classes["product-page__thumbnails"]}>
+            {gallery.map((imgUrl: string, index: number) => (
+              <img
+                key={index}
+                src={imgUrl}
+                alt={`${name} - ${index}`}
+                width={50}
+                height={50}
+                onClick={() => setCurrentImageIndex(index)}
+                className={classes["product-page__thumbnail"]}
+              />
+            ))}
+          </div>
+        )}
 
         <div
           className={classes["product-page__main"]}
