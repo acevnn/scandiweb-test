@@ -1,0 +1,6 @@
+{
+  "phpcs.enable": true,
+  "phpcs.standard": "PSR12",
+  "phpcs.executablePath": "C:/Users/Nino/AppData/Roaming/Composer/vendor/bin/phpcs.bat",
+  "cSpell.words": ["uncategorized"]
+}

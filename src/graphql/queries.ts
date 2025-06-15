@@ -100,15 +100,18 @@ export async function getProductById(id: string): Promise<Product> {
 }
 
 export async function createOrder(
-  productId: string,
-  quantity: number,
+  items: {
+    productId: string;
+    quantity: number;
+    selectedAttributes: string;
+  }[],
 ): Promise<boolean> {
   const query = `
-    mutation ($productId: String!, $quantity: Int!) {
-      createOrder(productId: $productId, quantity: $quantity)
+    mutation CreateOrder($items: [OrderItemInput!]!) {
+      createOrder(items: $items)
     }
   `;
-  const data = await fetchGraphQL(query, { productId, quantity });
+  const data = await fetchGraphQL(query, { items });
   return data.createOrder;
 }
 

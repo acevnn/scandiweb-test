@@ -33,7 +33,7 @@ class AttributeService
                     'jacket-canada-goosee' => 'clothing',
                 ];
 
-                $filterType = $sizeFilterMap[$productId] ?? 'clothing';
+                $filterType = $sizeFilterMap[$productId] ?? null;
 
                 if ($filterType === 'numeric') {
                     $items = array_filter($items, fn($item) => is_numeric($item['value']));

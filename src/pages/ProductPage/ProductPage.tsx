@@ -84,8 +84,6 @@ export default function ProductPage() {
   const testId = `product-${product.name.toLowerCase().replace(/\s+/g, "-")}`;
   const sizeOrder = ["S", "M", "L", "XL"];
 
-  console.log(gallery.length);
-
   return (
     <section className={classes["product-page"]}>
       <div className={classes["product-page__wrapper"]} data-testid={testId}>

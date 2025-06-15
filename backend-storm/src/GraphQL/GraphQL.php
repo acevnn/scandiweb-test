@@ -24,7 +24,7 @@ class GraphQL
             $pdo = (new Database())->getConnection();
             $categoryService = new CategoryService($pdo);
             $attributeService = new AttributeService($pdo);
-            $productService = new ProductService($pdo);
+            $productService = new ProductService($pdo, $attributeService);
             $orderService = new OrderService($pdo);
 
             $productType = ProductType::getType($attributeService);
@@ -75,22 +75,30 @@ class GraphQL
                 },
             ]);
 
+            $orderItemInput = new \GraphQL\Type\Definition\InputObjectType([
+                'name' => 'OrderItemInput',
+                'fields' => [
+                    'productId' => Type::nonNull(Type::string()),
+                    'quantity' => Type::nonNull(Type::int()),
+                    'selectedAttributes' => Type::nonNull(Type::string()),
+                ],
+            ]);
             $mutationType = new ObjectType([
                 'name' => 'Mutation',
                 'fields' => [
                     'createOrder' => [
                         'type' => Type::boolean(),
                         'args' => [
-                            'productId' => Type::nonNull(Type::string()),
-                            'quantity' => Type::nonNull(Type::int()),
+                            'items' => Type::nonNull(Type::listOf(Type::nonNull($orderItemInput))),
                         ],
                         'resolve' => function ($root, $args) use ($orderService) {
-                            return $orderService->createOrder($args['productId'], $args['quantity']);
+                            error_log("[DEBUG] Incoming items: " . json_encode($args['items']));
+
+                            return $orderService->createOrder($args['items']);
                         },
                     ],
                 ],
             ]);
-
             $schema = new Schema([
                 'query' => $queryType,
                 'mutation' => $mutationType,

@@ -14,19 +14,34 @@ class OrderService
         $this->pdo = $pdo;
     }
 
-    public function createOrder(string $productId, int $quantity): bool
+    public function createOrder(array $items): bool
     {
         try {
-            $stmt = $this->pdo->prepare(
-                "INSERT INTO orders (product_id, quantity) VALUES (:product_id, :quantity)"
-            );
+            $this->pdo->beginTransaction();
 
-            return $stmt->execute([
-                ':product_id' => $productId,
-                ':quantity' => $quantity,
-            ]);
-        } catch (PDOException $e) {
-            error_log("[OrderService] Failed to insert order: " . $e->getMessage());
+            $stmt = $this->pdo->prepare("INSERT INTO orders (created_at) VALUES (NOW())");
+            $stmt->execute();
+            $orderId = $this->pdo->lastInsertId();
+
+            foreach ($items as $item) {
+                $stmt = $this->pdo->prepare("
+                    INSERT INTO order_items (order_id, product_id, quantity, selected_attributes)
+                    VALUES (:order_id, :product_id, :quantity, :selected_attributes)
+                ");
+
+                $stmt->execute([
+                    ':order_id' => $orderId,
+                    ':product_id' => $item['productId'],
+                    ':quantity' => $item['quantity'],
+                    ':selected_attributes' => $item['selectedAttributes'],
+                ]);
+            }
+
+            $this->pdo->commit();
+            return true;
+        } catch (\Throwable $e) {
+            $this->pdo->rollBack();
+            error_log("[OrderService] Failed to create full order: " . $e->getMessage());
             return false;
         }
     }

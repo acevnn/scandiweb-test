@@ -11,10 +11,12 @@ use PDOException;
 class ProductService
 {
     private PDO $pdo;
+    private AttributeService $attributeService;
 
-    public function __construct(PDO $pdo)
+    public function __construct(PDO $pdo, AttributeService $attributeService)
     {
         $this->pdo = $pdo;
+        $this->attributeService = $attributeService;
     }
 
     public function getAll(): array
@@ -61,7 +63,7 @@ class ProductService
             $stmt->execute(['productId' => $productId]);
 
             return array_column($stmt->fetchAll(PDO::FETCH_ASSOC), 'image_url');
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             error_log("[ProductService] Failed to fetch images for product $productId: " . $e->getMessage());
             return [];
         }
@@ -78,13 +80,13 @@ class ProductService
             $stmt->execute(['productId' => $productId]);
 
             return array_map(fn($row) => [
-                'amount' => (float)$row['amount'],
+                'amount' => (float) $row['amount'],
                 'currency' => [
                     'label' => $row['label'],
                     'symbol' => $row['symbol'],
                 ],
             ], $stmt->fetchAll(PDO::FETCH_ASSOC));
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             error_log("[ProductService] Failed to fetch prices for product $productId: " . $e->getMessage());
             return [];
         }
@@ -113,47 +115,6 @@ class ProductService
             return null;
         }
     }
-
-    private function getAttributesForProduct(string $productId): array
-    {
-        try {
-            $stmt = $this->pdo->prepare("
-            SELECT a.id, a.name, a.type as attrType, ai.id as itemId, ai.value, ai.display_value
-            FROM attributes a
-            JOIN product_attribute_sets pas ON pas.attribute_id = a.id
-            JOIN attribute_items ai ON ai.attribute_id = a.id
-            WHERE pas.product_id = :productId
-        ");
-            $stmt->execute(['productId' => $productId]);
-
-            $rawRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            $grouped = [];
-            foreach ($rawRows as $row) {
-                $attrName = $row['name'];
-                if (!isset($grouped[$attrName])) {
-                    $grouped[$attrName] = [
-                        'id' => $row['id'],
-                        'name' => $row['name'],
-                        'attrType' => $row['attrType'],
-                        'items' => [],
-                    ];
-                }
-
-                $grouped[$attrName]['items'][] = [
-                    'id' => $row['itemId'],
-                    'value' => $row['value'],
-                    'displayValue' => $row['display_value'],
-                ];
-            }
-
-            return array_values($grouped);
-        } catch (PDOException $e) {
-            error_log("[ProductService] Failed to fetch attributes for product $productId: " . $e->getMessage());
-            return [];
-        }
-    }
-
     private const CATEGORY_MAP = [
         'clothes' => ClothesProduct::class,
         'tech' => TechProduct::class,
@@ -177,11 +138,9 @@ class ProductService
         }
 
         if (method_exists($product, 'setAttributes')) {
-            $product->setAttributes($this->getAttributesForProduct($data['id']));
+            $product->setAttributes($this->attributeService->getAttributesByProductId($data['id'], $categoryName));
         }
 
         return $product;
     }
-
-
 }
