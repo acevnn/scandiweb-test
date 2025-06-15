@@ -12,12 +12,20 @@ export default function PlaceOrderButton() {
     try {
       setIsPlacingOrder(true);
 
-      for (const item of items) {
-        await createOrder(item.id, item.quantity);
-      }
+      const orderItems = items.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+        selectedAttributes: JSON.stringify(item.selectedAttributes),
+      }));
 
-      alert("Order placed successfully!");
-      clearCart();
+      const success = await createOrder(orderItems);
+
+      if (success) {
+        alert("Order placed successfully!");
+        clearCart();
+      } else {
+        alert("Failed to place order.");
+      }
     } catch (err) {
       console.error("Order failed:", err);
       alert("Failed to place order.");
