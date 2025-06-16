@@ -9,4 +9,4 @@ $pdo = (new Database())->getConnection();
 $importer = new DataImporter($pdo);
 $importer->import(__DIR__ . '/../data/data.json');
 
-echo "✅ Data import completed.";
+echo "Data import completed.";
