@@ -80,10 +80,10 @@ class DataImporter
 
     private function insertProduct(array $product, int $categoryId): void
     {
-        $stmt = $this->pdo->prepare(
-            "INSERT INTO products (id, name, description, in_stock, brand, category_id) 
-                    VALUES (:id, :name, :description, :in_stock, :brand, :category_id)"
-        );
+        $stmt = $this->pdo->prepare("
+            INSERT IGNORE INTO products (id, name, description, in_stock, brand, category_id)
+            VALUES (:id, :name, :description, :in_stock, :brand, :category_id)
+        ");
 
         $stmt->execute([
             ':id' => $product['id'],
@@ -97,10 +97,10 @@ class DataImporter
 
     private function insertImages(string $productId, array $images): void
     {
-        $stmt = $this->pdo->prepare(
-            "INSERT INTO product_images (product_id, image_url) 
-                    VALUES (:product_id, :image_url)"
-        );
+        $stmt = $this->pdo->prepare("
+            INSERT IGNORE INTO product_images (product_id, image_url)
+            VALUES (:product_id, :image_url)
+        ");
 
         foreach ($images as $image) {
             $stmt->execute([':product_id' => $productId, ':image_url' => $image]);
@@ -109,10 +109,10 @@ class DataImporter
 
     private function insertPrices(string $productId, array $prices): void
     {
-        $stmt = $this->pdo->prepare(
-            "INSERT INTO prices (product_id, amount, currency_label, currency_symbol) 
-                    VALUES (:product_id, :amount, :label, :symbol)"
-        );
+        $stmt = $this->pdo->prepare("
+            INSERT IGNORE INTO prices (product_id, amount, currency_label, currency_symbol)
+            VALUES (:product_id, :amount, :label, :symbol)
+        ");
 
         foreach ($prices as $price) {
             $stmt->execute([
@@ -155,16 +155,22 @@ class DataImporter
 
     private function insertAttributeItems(int $attributeId, array $items): void
     {
-        $stmtCheck = $this->pdo->prepare(
-            "SELECT COUNT(*) FROM attribute_items WHERE attribute_id = :attr_id AND item_key = :item_key"
-        );
-        $stmtInsert = $this->pdo->prepare(
-            "INSERT INTO attribute_items (attribute_id, display_value, value, item_key) 
-                    VALUES (:attr_id, :display, :value, :item_key)"
-        );
+        $stmtCheck = $this->pdo->prepare("
+            SELECT COUNT(*) FROM attribute_items
+            WHERE attribute_id = :attr_id AND item_key = :item_key
+        ");
+
+        $stmtInsert = $this->pdo->prepare("
+            INSERT INTO attribute_items (attribute_id, display_value, value, item_key)
+            VALUES (:attr_id, :display, :value, :item_key)
+        ");
 
         foreach ($items as $item) {
-            $stmtCheck->execute([':attr_id' => $attributeId, ':item_key' => $item['id']]);
+            $stmtCheck->execute([
+                ':attr_id' => $attributeId,
+                ':item_key' => $item['id'],
+            ]);
+
             if ((int) $stmtCheck->fetchColumn() === 0) {
                 $stmtInsert->execute([
                     ':attr_id' => $attributeId,
@@ -178,9 +184,10 @@ class DataImporter
 
     private function linkProductAttribute(string $productId, int $attributeId): void
     {
-        $stmt = $this->pdo->prepare(
-            "INSERT INTO product_attribute_sets (product_id, attribute_id) VALUES (:pid, :aid)"
-        );
+        $stmt = $this->pdo->prepare("
+            INSERT IGNORE INTO product_attribute_sets (product_id, attribute_id)
+            VALUES (:pid, :aid)
+        ");
         $stmt->execute([':pid' => $productId, ':aid' => $attributeId]);
     }
 }
