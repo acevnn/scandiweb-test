@@ -13,6 +13,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
+// TEMPORARY DATA IMPORT TRIGGER
+if ($_SERVER['REQUEST_URI'] === '/__trigger-import__') {
+    require_once __DIR__ . '/../vendor/autoload.php';
+
+    $pdo = (new \App\Config\Database())->getConnection();
+    $importer = new \App\Services\DataImporter($pdo);
+    $importer->import(__DIR__ . '/../data/data.json');
+
+    echo "Data import completed.";
+    exit;
+}
+
 use App\GraphQL\GraphQL;
 
 require_once __DIR__ . '/../vendor/autoload.php';
