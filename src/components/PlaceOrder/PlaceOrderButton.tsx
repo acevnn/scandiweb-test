@@ -1,5 +1,5 @@
 import { useCartStore } from "@/store/cartStore";
-import { createOrder } from "@/graphql/queries";
+import { placeOrder } from "@/graphql/queries";
 import { useState } from "react";
 import classes from "./PlaceOrderButton.module.scss";
 
@@ -18,7 +18,7 @@ export default function PlaceOrderButton() {
         selectedAttributes: JSON.stringify(item.selectedAttributes),
       }));
 
-      const success = await createOrder(orderItems);
+      const success = await placeOrder(orderItems);
 
       if (success) {
         alert("Order placed successfully!");

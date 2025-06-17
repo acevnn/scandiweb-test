@@ -9,6 +9,7 @@ use App\Services\AttributeService;
 use App\Services\CategoryService;
 use App\Services\OrderService;
 use App\Services\ProductService;
+use App\GraphQL\Types\MutationType;
 use GraphQL\GraphQL as GraphQLBase;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
@@ -83,22 +84,8 @@ class GraphQL
                     'selectedAttributes' => Type::nonNull(Type::string()),
                 ],
             ]);
-            $mutationType = new ObjectType([
-                'name' => 'Mutation',
-                'fields' => [
-                    'createOrder' => [
-                        'type' => Type::boolean(),
-                        'args' => [
-                            'items' => Type::nonNull(Type::listOf(Type::nonNull($orderItemInput))),
-                        ],
-                        'resolve' => function ($root, $args) use ($orderService) {
-                            error_log("[DEBUG] Incoming items: " . json_encode($args['items']));
+            $mutationType = new MutationType($orderService);
 
-                            return $orderService->createOrder($args['items']);
-                        },
-                    ],
-                ],
-            ]);
             $schema = new Schema([
                 'query' => $queryType,
                 'mutation' => $mutationType,

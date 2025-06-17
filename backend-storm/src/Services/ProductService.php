@@ -38,6 +38,10 @@ class ProductService
 
     public function getByCategory(string $categoryName): array
     {
+        if (strtolower($categoryName) === 'all') {
+            return $this->getAll();
+        }
+
         try {
             $stmt = $this->pdo->prepare("
             SELECT p.*, c.name AS category, c.name AS category_name
@@ -54,6 +58,7 @@ class ProductService
             return [];
         }
     }
+
 
 
     private function getImagesForProduct(string $productId): array
