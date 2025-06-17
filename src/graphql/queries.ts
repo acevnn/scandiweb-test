@@ -1,8 +1,8 @@
 import { Category, Product } from "@/types/dataTypes";
-import { GRAPHQL_ENDPOINT } from "@/utils/constants";
+import { GRAPHQL_ENDPOINT_LOCAL } from "@/utils/constants";
 
 export async function fetchGraphQL(query: string, variables = {}) {
-  const response = await fetch(GRAPHQL_ENDPOINT, {
+  const response = await fetch(GRAPHQL_ENDPOINT_LOCAL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query, variables }),
@@ -99,7 +99,7 @@ export async function getProductById(id: string): Promise<Product> {
   return data.product;
 }
 
-export async function createOrder(
+export async function placeOrder(
   items: {
     productId: string;
     quantity: number;
@@ -107,12 +107,12 @@ export async function createOrder(
   }[],
 ): Promise<boolean> {
   const query = `
-    mutation CreateOrder($items: [OrderItemInput!]!) {
-      createOrder(items: $items)
+    mutation PlaceOrder($items: [OrderItemInput!]!) {
+      placeOrder(items: $items)
     }
   `;
   const data = await fetchGraphQL(query, { items });
-  return data.createOrder;
+  return data.placeOrder;
 }
 
 export async function getAllProducts(): Promise<Product[]> {

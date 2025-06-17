@@ -43,10 +43,7 @@ class ProductType
                 ],
                 'attributes' => [
                     'type' => Type::listOf(AttributeType::getType()),
-                    'resolve' => fn($product) => $attributeService->getAttributesByProductId(
-                        $product->getId(),
-                        $product->getCategory()
-                    ),
+                    'resolve' => fn($product) => $product->getAttributes(),
                 ],
                 'prices' => [
                     'type' => Type::listOf(PriceType::getType()),
