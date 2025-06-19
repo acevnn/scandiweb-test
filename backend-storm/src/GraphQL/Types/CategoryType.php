@@ -14,9 +14,15 @@ class CategoryType
         if (self::$instance === null) {
             self::$instance = new ObjectType([
                 'name' => 'Category',
-                'fields' => fn(): array => [
-                    'id' => ['type' => Type::nonNull(Type::int())],
-                    'name' => ['type' => Type::nonNull(Type::string())],
+                'fields' => [
+                    'id' => [
+                        'type' => Type::nonNull(Type::int()),
+                        'resolve' => fn($category) => $category->getId(),
+                    ],
+                    'name' => [
+                        'type' => Type::nonNull(Type::string()),
+                        'resolve' => fn($category) => $category->getName(),
+                    ],
                 ],
             ]);
         }
