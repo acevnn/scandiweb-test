@@ -12,9 +12,9 @@ class CategoryFactory
     public static function create(string $name, int $id): Category
     {
         return match (strtolower($name)) {
-            'tech' => new TechCategory($id, $name),
-            'clothes' => new ClothingCategory($id, $name),
-            'all' => new AllCategory($id, $name),
+            'tech' => new TechCategory((string) $id, $name),
+            'clothes' => new ClothingCategory((string) $id, $name),
+            'all' => new AllCategory((string) $id, $name),
             default => throw new \InvalidArgumentException("[CategoryService] Skipping unknown category: $name"),
         };
     }
