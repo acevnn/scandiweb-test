@@ -79,8 +79,8 @@
 
   &__section-wrapper {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); // 🔧 3 columns
-    gap: 2rem; // adjust spacing
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
   }
 
   &__disabled {
