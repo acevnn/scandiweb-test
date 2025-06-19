@@ -16,7 +16,7 @@
   &__product-card {
     position: relative;
     width: 100%;
-    max-width: 22rem;
+    max-width: 24rem;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -78,10 +78,9 @@
   }
 
   &__section-wrapper {
-    display: flex;
-    gap: 2.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
   }
 
   &__disabled {

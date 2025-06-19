@@ -21,8 +21,6 @@ export default function AppRouter() {
       try {
         const categories: Category[] = await getCategories();
 
-        console.log(categories);
-
         const dynamicRoutes = categories.map((category) => ({
           path: `/${category.name.toLowerCase()}`,
           element: <CategoryPage />,
